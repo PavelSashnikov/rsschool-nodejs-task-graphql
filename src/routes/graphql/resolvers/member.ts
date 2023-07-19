@@ -1,13 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import { UUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
 export const MemberResolvers = {
-  member: async ({ id }: { id: UUID }) => {
+  memberType: async ({ id }: { id: string }) => {
     return await prisma.memberType.findFirst({ where: { id } });
   },
-  members: async () => {
+  memberTypes: async () => {
     return await prisma.memberType.findMany();
   },
 };

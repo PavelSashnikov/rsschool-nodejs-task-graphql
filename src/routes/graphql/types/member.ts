@@ -1,11 +1,11 @@
 import { GraphQLFloat, GraphQLList, GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import { UUIDType } from './uuid.js';
 import { profileType } from './profile.js';
+import { MemberId } from '../entities/enum.js';
 
 export const memberType: GraphQLObjectType = new GraphQLObjectType({
-  name: 'Member',
+  name: 'MemberType',
   fields: () => ({
-    id: { type: new GraphQLNonNull(UUIDType) },
+    id: { type: new GraphQLNonNull(MemberId) },
     discount: { type: GraphQLFloat },
     postsLimitPerMonth: { type: GraphQLFloat },
     profiles: { type: new GraphQLList(profileType) },

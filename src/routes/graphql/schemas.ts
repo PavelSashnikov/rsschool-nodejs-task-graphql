@@ -1,10 +1,16 @@
 import { Type } from '@fastify/type-provider-typebox';
-import { GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLSchema } from 'graphql';
+import {
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+} from 'graphql';
 import { userType } from './types/user.js';
 import { UUIDType } from './types/uuid.js';
 import { profileType } from './types/profile.js';
 import { memberType } from './types/member.js';
 import { postType } from './types/post.js';
+import { MemberId } from './entities/enum.js';
 
 export const gqlResponseSchema = Type.Partial(
   Type.Object({
@@ -49,7 +55,7 @@ const query = new GraphQLObjectType({
     memberType: {
       type: memberType,
       args: {
-        id: { type: new GraphQLNonNull(UUIDType) },
+        id: { type: new GraphQLNonNull(MemberId) },
       },
     },
     memberTypes: {

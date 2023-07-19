@@ -17,8 +17,8 @@ export const userType: GraphQLObjectType = new GraphQLObjectType({
     name: { type: GraphQLString },
     balance: { type: GraphQLFloat },
     profile: { type: profileType },
-    post: {type: postType},
-    userSubscribedTo: {type: new GraphQLList(subscriberType)},
-    subscribedToUser: {type: new GraphQLList(subscriberType)},
+    posts: { type: postType },
+    userSubscribedTo: { type: new GraphQLList(subscriberType) },
+    subscribedToUser: { type: new GraphQLList(subscriberType) },
   }),
 });
