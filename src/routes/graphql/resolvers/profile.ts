@@ -11,3 +11,13 @@ export const ProfileResolvers = {
     return await prisma.profile.findMany();
   },
 };
+
+export const getProfile = {
+  byUserId: async (userId: UUID) => {
+    return await prisma.profile.findUnique({
+      where: {
+        userId,
+      },
+    });
+  },
+};
