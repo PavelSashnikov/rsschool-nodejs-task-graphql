@@ -3,6 +3,8 @@ import { GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLSchema } from 'g
 import { userType } from './types/user.js';
 import { UUIDType } from './types/uuid.js';
 import { profileType } from './types/profile.js';
+import { memberType } from './types/member.js';
+import { postType } from './types/post.js';
 
 export const gqlResponseSchema = Type.Partial(
   Type.Object({
@@ -35,18 +37,33 @@ const query = new GraphQLObjectType({
     users: {
       type: new GraphQLList(userType),
     },
-    prifile: {
+    profile: {
       type: profileType,
       args: {
-        id:  { type: new GraphQLNonNull(UUIDType) },
-      }
+        id: { type: new GraphQLNonNull(UUIDType) },
+      },
     },
-    prifiles: {
+    profiles: {
       type: new GraphQLList(profileType),
+    },
+    memberType: {
+      type: memberType,
       args: {
-        id:  { type: new GraphQLNonNull(UUIDType) },
-      }
-    }
+        id: { type: new GraphQLNonNull(UUIDType) },
+      },
+    },
+    memberTypes: {
+      type: new GraphQLList(memberType),
+    },
+    post: {
+      type: postType,
+      args: {
+        id: { type: new GraphQLNonNull(UUIDType) },
+      },
+    },
+    posts: {
+      type: new GraphQLList(postType),
+    },
   },
 });
 

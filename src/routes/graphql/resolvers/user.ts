@@ -7,7 +7,7 @@ export const UserResolvers = {
   user: async ({ id }: { id: UUID }) => {
     return await prisma.user.findFirst({ where: { id } });
   },
-  users: async (_) => {
+  users: async () => {
     return await prisma.user.findMany();
   },
 };
