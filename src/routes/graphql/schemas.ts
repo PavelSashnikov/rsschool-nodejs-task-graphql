@@ -2,6 +2,7 @@ import { Type } from '@fastify/type-provider-typebox';
 import { GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { userType } from './types/user.js';
 import { UUIDType } from './types/uuid.js';
+import { profileType } from './types/profile.js';
 
 export const gqlResponseSchema = Type.Partial(
   Type.Object({
@@ -34,6 +35,18 @@ const query = new GraphQLObjectType({
     users: {
       type: new GraphQLList(userType),
     },
+    prifile: {
+      type: profileType,
+      args: {
+        id:  { type: new GraphQLNonNull(UUIDType) },
+      }
+    },
+    prifiles: {
+      type: new GraphQLList(profileType),
+      args: {
+        id:  { type: new GraphQLNonNull(UUIDType) },
+      }
+    }
   },
 });
 
