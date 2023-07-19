@@ -8,7 +8,6 @@ import {
 import { UUIDType } from './uuid.js';
 import { profileType } from './profile.js';
 import { postType } from './post.js';
-import { subscriberType } from './subs.js';
 import { User } from '@prisma/client';
 import { getProfile } from '../resolvers/profile.js';
 import { UUID } from 'node:crypto';
@@ -34,13 +33,13 @@ export const userType: GraphQLObjectType = new GraphQLObjectType({
       },
     },
     userSubscribedTo: {
-      type: new GraphQLList(subscriberType),
+      type: new GraphQLList(userType),
       async resolve(user: User) {
         return await getSubs.usersById(user.id as UUID);
       },
     },
     subscribedToUser: {
-      type: new GraphQLList(subscriberType),
+      type: new GraphQLList(userType),
       async resolve(user: User) {
         return await getSubs.forUserById(user.id as UUID);
       },
