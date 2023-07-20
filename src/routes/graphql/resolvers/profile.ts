@@ -14,6 +14,10 @@ export const ProfileResolvers = {
   createProfile: async ({ dto }: { dto: IProfileDto }) => {
     return await prisma.profile.create({ data: dto });
   },
+  deleteProfile: async ({ id }: { id: UUID }) => {
+    await prisma.profile.delete({ where: { id } });
+    return '';
+  },
 };
 
 export const getProfile = {

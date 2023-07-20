@@ -16,4 +16,12 @@ export const UserResolvers = {
       data: dto,
     });
   },
+  deleteUser: async ({ id }: { id: UUID }) => {
+    await prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+    return '';
+  },
 };

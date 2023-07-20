@@ -11,9 +11,13 @@ export const PostResolvers = {
   posts: async () => {
     return await prisma.post.findMany();
   },
-  createPost: async ({dto}: {dto: IPostDto}) => {
-    return await prisma.post.create({data: dto})
-  }
+  createPost: async ({ dto }: { dto: IPostDto }) => {
+    return await prisma.post.create({ data: dto });
+  },
+  deletePost: async ({ id }: { id: UUID }) => {
+    await prisma.post.delete({ where: { id } });
+    return '';
+  },
 };
 
 export const getPosts = {
