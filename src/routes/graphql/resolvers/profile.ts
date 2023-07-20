@@ -18,6 +18,12 @@ export const ProfileResolvers = {
     await prisma.profile.delete({ where: { id } });
     return '';
   },
+  changeProfile: async ({ id, dto }: { id: UUID; dto: Partial<IProfileDto> }) => {
+    return await prisma.profile.update({
+      where: { id },
+      data: dto,
+    });
+  },
 };
 
 export const getProfile = {

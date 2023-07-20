@@ -1,10 +1,10 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 import { userType } from '../types/user.js';
-import { userDto } from '../dto/user.js';
+import { userChangeDto, userDto } from '../dto/user.js';
 import { profileType } from '../types/profile.js';
-import { profileDto } from '../dto/profile.js';
+import { profileChangeDto, profileDto } from '../dto/profile.js';
 import { postType } from '../types/post.js';
-import { postDto } from '../dto/post.js';
+import { postChangeDto, postDto } from '../dto/post.js';
 import { UUIDType } from '../types/uuid.js';
 
 export const mutation = new GraphQLObjectType({
@@ -17,10 +17,22 @@ export const mutation = new GraphQLObjectType({
         id: { type: UUIDType },
       },
     },
-    // changeUser
+    changeUser: {
+      type: userType,
+      args: {
+        id: { type: UUIDType },
+        dto: { type: userChangeDto },
+      },
+    },
 
     createPost: { type: postType, args: { dto: { type: postDto } } },
-    // changePost
+    changePost: {
+      type: postType,
+      args: {
+        id: { type: UUIDType },
+        dto: { type: postChangeDto },
+      },
+    },
     deletePost: {
       type: GraphQLString,
       args: {
@@ -29,7 +41,13 @@ export const mutation = new GraphQLObjectType({
     },
 
     createProfile: { type: profileType, args: { dto: { type: profileDto } } },
-    // changeProfile
+    changeProfile: {
+      type: profileType,
+      args: {
+        id: { type: UUIDType },
+        dto: { type: profileChangeDto },
+      },
+    },
     deleteProfile: {
       type: GraphQLString,
       args: {

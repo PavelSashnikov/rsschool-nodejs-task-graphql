@@ -24,4 +24,10 @@ export const UserResolvers = {
     });
     return '';
   },
+  changeUser: async ({ id, dto }: { id: UUID; dto: Partial<IUserDto> }) => {
+    return await prisma.user.update({
+      where: { id },
+      data: dto,
+    });
+  },
 };

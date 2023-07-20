@@ -17,3 +17,11 @@ export const profileDto = new GraphQLInputObjectType({
     yearOfBirth: { type: GraphQLInt },
   }),
 });
+export const profileChangeDto = new GraphQLInputObjectType({
+  name: 'ChangeProfileInput',
+  fields: () => ({
+    memberTypeId: { type: MemberId },
+    isMale: { type: GraphQLBoolean },
+    yearOfBirth: { type: GraphQLInt },
+  }),
+});

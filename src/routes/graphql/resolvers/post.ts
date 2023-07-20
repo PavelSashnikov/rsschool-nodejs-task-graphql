@@ -18,6 +18,12 @@ export const PostResolvers = {
     await prisma.post.delete({ where: { id } });
     return '';
   },
+  changePost: async ({ id, dto }: { id: UUID; dto: Partial<IPostDto> }) => {
+    return await prisma.post.update({
+      where: { id },
+      data: dto,
+    });
+  },
 };
 
 export const getPosts = {

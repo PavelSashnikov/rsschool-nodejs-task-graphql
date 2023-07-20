@@ -12,3 +12,10 @@ export const userDto = new GraphQLInputObjectType({
     balance: { type: GraphQLFloat },
   }),
 });
+export const userChangeDto = new GraphQLInputObjectType({
+  name: 'ChangeUserInput',
+  fields: () => ({
+    name: { type: GraphQLString },
+    balance: { type: GraphQLFloat },
+  }),
+});
