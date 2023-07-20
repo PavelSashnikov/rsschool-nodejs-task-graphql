@@ -42,8 +42,8 @@ export const createDataLoaders = (globalPrisma: PrismaClient) => {
         subscriberId: { in: localIds },
       },
       select: {
-        author: true,
         subscriberId: true,
+        author: true,
       },
     });
     const sortedInIdsOrder = ids.map(

@@ -1,15 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 import { UUID } from 'crypto';
 import { IUserDto } from '../dto/user.js';
+import { IContextDataLoader } from '../dataLoader/interface.js';
 
 const prisma = new PrismaClient();
 
 export const UserResolvers = {
-  user: async ({ id }: { id: UUID }) => {
-    return await prisma.user.findFirst({ where: { id } });
+  user: async ({ id }: { id: UUID }, context: IContextDataLoader) => {
+    return await context.user.load(id);
   },
-  users: async () => {
-    return await prisma.user.findMany();
+  users: async (_, context: IContextDataLoader) => {
+    const users = await prisma.user.findMany();
+    users.forEach((u) => context.user.prime(u.id, u));
+    return users;
   },
   createUser: async ({ dto }: { dto: IUserDto }) => {
     return await prisma.user.create({
