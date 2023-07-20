@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { UUID } from 'crypto';
+import { IUserDto } from '../dto/user.js';
 
 const prisma = new PrismaClient();
 
@@ -9,5 +10,10 @@ export const UserResolvers = {
   },
   users: async () => {
     return await prisma.user.findMany();
+  },
+  createUser: async ({ dto }: { dto: IUserDto }) => {
+    return await prisma.user.create({
+      data: dto,
+    });
   },
 };

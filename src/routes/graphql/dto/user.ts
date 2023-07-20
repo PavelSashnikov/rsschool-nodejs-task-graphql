@@ -1,5 +1,10 @@
 import { GraphQLFloat, GraphQLInputObjectType, GraphQLString } from 'graphql';
 
+export interface IUserDto {
+  name: string;
+  balance: number;
+}
+
 export const userDto = new GraphQLInputObjectType({
   name: 'CreateUserInput',
   fields: () => ({
