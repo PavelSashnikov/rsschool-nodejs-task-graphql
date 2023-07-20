@@ -9,10 +9,7 @@ import { UUIDType } from './uuid.js';
 import { profileType } from './profile.js';
 import { postType } from './post.js';
 import { User } from '@prisma/client';
-import { getProfile } from '../resolvers/profile.js';
-import { UUID } from 'node:crypto';
-import { getPosts } from '../resolvers/post.js';
-import { getSubs } from '../resolvers/subs.js';
+import { IContextDataLoader } from '../dataLoader/interface.js';
 
 export const userType: GraphQLObjectType = new GraphQLObjectType({
   name: 'User',
@@ -22,26 +19,33 @@ export const userType: GraphQLObjectType = new GraphQLObjectType({
     balance: { type: GraphQLFloat },
     profile: {
       type: profileType,
-      async resolve(user: User) {
-        return await getProfile.byUserId(user.id as UUID);
+      async resolve(user: User, _, context: IContextDataLoader) {
+        const { profiles } = context;
+
+        return profiles.load(user.id);
       },
     },
     posts: {
       type: new GraphQLList(postType),
-      async resolve(user: User) {
-        return await getPosts.byUserId(user.id as UUID);
+      async resolve(user: User, _, context: IContextDataLoader) {
+        const { posts } = context;
+        const res = await posts.load(user.id);
+        return [res]
       },
     },
     userSubscribedTo: {
       type: new GraphQLList(userType),
-      async resolve(user: User) {
-        return await getSubs.usersById(user.id as UUID);
+      async resolve(user: User, _, context: IContextDataLoader) {
+        const { subscribedTo } = context;
+        const res = await subscribedTo.load(user.id)
+        return [res];
       },
     },
     subscribedToUser: {
       type: new GraphQLList(userType),
-      async resolve(user: User) {
-        return await getSubs.forUserById(user.id as UUID);
+      async resolve(user: User, _, context: IContextDataLoader) {
+        const { subscribersFor } = context;
+        return [subscribersFor.load(user.id)];
       },
     },
   }),

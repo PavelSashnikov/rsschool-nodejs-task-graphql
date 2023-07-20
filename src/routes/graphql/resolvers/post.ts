@@ -25,13 +25,3 @@ export const PostResolvers = {
     });
   },
 };
-
-export const getPosts = {
-  byUserId: async (authorId: UUID) => {
-    return await prisma.post.findMany({
-      where: {
-        authorId,
-      },
-    });
-  },
-};

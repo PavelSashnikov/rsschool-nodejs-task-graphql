@@ -8,10 +8,8 @@ import {
 import { UUIDType } from './uuid.js';
 import { userType } from './user.js';
 import { memberType } from './member.js';
-import { UserResolvers } from '../resolvers/user.js';
 import { Profile } from '@prisma/client';
-import { UUID } from 'crypto';
-import { MemberResolvers } from '../resolvers/member.js';
+import { IContextDataLoader } from '../dataLoader/interface.js';
 
 export const profileType: GraphQLObjectType = new GraphQLObjectType({
   name: 'Profile',
@@ -21,15 +19,17 @@ export const profileType: GraphQLObjectType = new GraphQLObjectType({
     yearOfBirth: { type: GraphQLFloat },
     user: {
       type: userType,
-      async resolve(profile: Profile) {
-        return await UserResolvers.user({ id: profile.id as UUID });
+      async resolve(profile: Profile, arg, context: IContextDataLoader) {
+        const { user } = context;
+        return await user.load(profile.id);
       },
     },
     userId: { type: new GraphQLNonNull(UUIDType) },
     memberType: {
       type: memberType,
-      async resolve(profile: Profile) {
-        return await MemberResolvers.memberType({ id: profile.memberTypeId });
+      async resolve(profile: Profile, arg, context: IContextDataLoader) {
+        const { memberType } = context;
+        return await memberType.load(profile.memberTypeId);
       },
     },
     memberTypeId: { type: GraphQLString },
