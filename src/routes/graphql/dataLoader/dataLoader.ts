@@ -3,11 +3,16 @@ import DataLoader from 'dataloader';
 
 export const createDataLoaders = (globalPrisma: PrismaClient) => {
   const prisma = globalPrisma;
+
   const userById = async (ids: readonly string[]) => {
     const localIds = [...ids];
     const users = await prisma.user.findMany({
       where: {
         id: { in: localIds },
+      },
+      include: {
+        subscribedToUser: true,
+        userSubscribedTo: true,
       },
     });
     const sortedInIdsOrder = ids.map((id) => users.find((user) => user.id === id));

@@ -27,7 +27,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         source: req.body.query,
         rootValue,
         variableValues: req.body.variables,
-        contextValue: createDataLoaders(fastify.prisma),
+        contextValue: { db: fastify.prisma, ...createDataLoaders(fastify.prisma) },
       });
     },
   });
