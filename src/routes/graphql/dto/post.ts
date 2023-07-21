@@ -1,4 +1,4 @@
-import { GraphQLInputObjectType, GraphQLString } from 'graphql';
+import { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
 
 export interface IPostDto {
   authorId: string;
@@ -9,9 +9,9 @@ export interface IPostDto {
 export const postDto = new GraphQLInputObjectType({
   name: 'CreatePostInput',
   fields: () => ({
-    authorId: { type: GraphQLString },
-    content: { type: GraphQLString },
-    title: { type: GraphQLString },
+    authorId: { type: new GraphQLNonNull(GraphQLString) },
+    content: { type: new GraphQLNonNull(GraphQLString) },
+    title: { type: new GraphQLNonNull(GraphQLString) },
   }),
 });
 export const postChangeDto = new GraphQLInputObjectType({

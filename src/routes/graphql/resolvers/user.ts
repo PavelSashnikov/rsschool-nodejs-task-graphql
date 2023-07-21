@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { UUID } from 'crypto';
 import { IUserDto } from '../dto/user.js';
 import { IContextDataLoader } from '../dataLoader/interface.js';
